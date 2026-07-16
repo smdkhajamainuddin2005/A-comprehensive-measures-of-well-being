@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDI Prediction Result</title>
+    <!-- Modern Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to premium stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="background-decor">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <div class="container animate-fade-in">
+        <header class="header">
+            <h1 class="logo-text">HDI <span>Predictor</span></h1>
+            <p class="tagline">Human Development Index Machine Learning System</p>
+        </header>
+
+        <main class="card glassmorphism result-card">
+            <h2 class="result-title">Prediction Result</h2>
+
+            <div class="result-display-wrapper">
+                <div class="hdi-score-badge {{ classification_class }}">
+                    <div class="hdi-score-value">{{ "%.4f"|format(predicted_score) }}</div>
+                    <div class="hdi-score-label">Predicted HDI Score</div>
+                </div>
+                <div class="classification-text {{ classification_class }}">
+                    {{ classification_msg }}
+                </div>
+            </div>
+
+            <section class="details-section">
+                <h3>Input Parameters</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-title">Life Expectancy</span>
+                        <span class="stat-value">{{ life_expectancy }} <span class="stat-unit">Years</span></span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-title">Mean Years of Schooling</span>
+                        <span class="stat-value">{{ mean_years_of_schooling }} <span
+                                class="stat-unit">Years</span></span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-title">GNI Per Capita</span>
+                        <span class="stat-value">${{ "{:,}".format(gni_per_capita|int) }} <span
+                                class="stat-unit">USD</span></span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="scale-section">
+                <h3>HDI Reference Scales</h3>
+                <div class="scale-bar-container">
+                    <div class="scale-bracket low-hdi {% if classification_class == 'low-hdi' %}active{% endif %}">
+                        <span class="bracket-name">Low</span>
+                        <span class="bracket-range">&lt; 0.550</span>
+                    </div>
+                    <div
+                        class="scale-bracket medium-hdi {% if classification_class == 'medium-hdi' %}active{% endif %}">
+                        <span class="bracket-name">Medium</span>
+                        <span class="bracket-range">0.550 - 0.699</span>
+                    </div>
+                    <div class="scale-bracket high-hdi {% if classification_class == 'high-hdi' %}active{% endif %}">
+                        <span class="bracket-name">High</span>
+                        <span class="bracket-range">0.700 - 0.799</span>
+                    </div>
+                    <div
+                        class="scale-bracket very-high-hdi {% if classification_class == 'very-high-hdi' %}active{% endif %}">
+                        <span class="bracket-name">Very High</span>
+                        <span class="bracket-range">≥ 0.800</span>
+                    </div>
+                </div>
+            </section>
+
+            <a href="{{ url_for('home') }}" class="btn btn-secondary btn-block">
+                <svg class="btn-icon-back" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor"
+                        d="M19 11H7.14l5.43-5.43-1.42-1.42L2.86 12l8.29 8.29 1.42-1.42L7.14 13H19v-2z" />
+                </svg>
+                <span>Calculate Another Prediction</span>
+            </a>
+        </main>
+
+        <footer class="footer-note">
+            <p>Developed using Flask & Scikit-learn Linear Regression model.</p>
+        </footer>
+    </div>
+</body>
+
+</html>
