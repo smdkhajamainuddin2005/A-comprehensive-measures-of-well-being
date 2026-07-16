@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDI Prediction System</title>
+    <!-- Modern Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to premium stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="background-decor">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+    
+    <div class="container animate-fade-in">
+        <header class="header">
+            <h1 class="logo-text">HDI <span>Predictor</span></h1>
+            <p class="tagline">Human Development Index Machine Learning System</p>
+        </header>
+
+        <main class="card glassmorphism">
+            <section class="intro-section">
+                <h2>Project Overview</h2>
+                <p>
+                    The <strong>Human Development Index (HDI)</strong> is a summary measure of average achievement in key dimensions of human development: a long and healthy life, being knowledgeable, and having a decent standard of living.
+                </p>
+                <p>
+                    This system uses a trained <strong>Linear Regression Model</strong> to predict a country's HDI score based on three core indicators. Enter the details below to estimate the score.
+                </p>
+            </section>
+
+            <!-- Flash Error Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <span class="alert-icon">⚠️</span>
+                                <span class="alert-text">{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('predict') }}" method="POST" class="prediction-form">
+                <div class="form-group">
+                    <label for="life_expectancy">
+                        Life Expectancy at Birth (Years)
+                        <span class="tooltip-info" title="The average number of years a newborn is expected to live. Typical range: 20 to 100 years.">ℹ️</span>
+                    </label>
+                    <input 
+                        type="number" 
+                        step="0.1" 
+                        name="life_expectancy" 
+                        id="life_expectancy" 
+                        placeholder="e.g., 78.5" 
+                        min="20" 
+                        max="100" 
+                        value="{{ life_expectancy or '' }}" 
+                        required
+                    >
+                    <small class="helper-text">Enter value between 20.0 and 100.0</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="mean_years_of_schooling">
+                        Mean Years of Schooling (Years)
+                        <span class="tooltip-info" title="Average number of years of education received by people ages 25 and older. Typical range: 0 to 20 years.">ℹ️</span>
+                    </label>
+                    <input 
+                        type="number" 
+                        step="0.1" 
+                        name="mean_years_of_schooling" 
+                        id="mean_years_of_schooling" 
+                        placeholder="e.g., 11.5" 
+                        min="0" 
+                        max="20" 
+                        value="{{ mean_years_of_schooling or '' }}" 
+                        required
+                    >
+                    <small class="helper-text">Enter value between 0.0 and 20.0</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="gni_per_capita">
+                        GNI Per Capita (PPP, Current $)
+                        <span class="tooltip-info" title="Gross National Income per capita converted to international dollars using purchasing power parity rates. Typical range: $100 to $150,000.">ℹ️</span>
+                    </label>
+                    <input 
+                        type="number" 
+                        step="1" 
+                        name="gni_per_capita" 
+                        id="gni_per_capita" 
+                        placeholder="e.g., 24000" 
+                        min="100" 
+                        max="150000" 
+                        value="{{ gni_per_capita or '' }}" 
+                        required
+                    >
+                    <small class="helper-text">Enter value between 100 and 150,000</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span>Calculate Predicted HDI</span>
+                    <svg class="btn-icon" viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="currentColor" d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42L16.86 11H5v2z"/>
+                    </svg>
+                </button>
+            </form>
+        </main>
+
+        <footer class="footer-note">
+            <p>Developed using Flask & Scikit-learn Linear Regression model.</p>
+        </footer>
+    </div>
+</body>
+</html>
