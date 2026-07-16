@@ -1,8 +1,5 @@
 # A-comprehensive-measures-of-well-being
 A comprehensive measure of well-being is a way of measuring the overall quality of life of people. It includes not only income but also health, education, living standards, safety, environment, and happiness. It helps understand how well people are living and supports governments in making better policies for development.
-# A-Comprehensive-Measure-of-Well-Being
-Comprehensive Measure of Well-Being is a way to evaluate a person's overall quality of life. It includes not only physical health but also mental, emotional, social, and financial well-being. It helps understand how satisfied and healthy people are in different aspects of life, leading to better personal and community development.
-
 # Human Development Index (HDI) Prediction System
 
 [![Drive Demo](https://img.shields.io/badge/Drive%20Demo-Google%20Drive-orange?style=for-the-badge&logo=googledrive)](https://drive.google.com/file/d/1NTuKqvSZDWj6mxcPyroNCTFybO-rs0jp/view?usp=sharing)
